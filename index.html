@@ -146,9 +146,10 @@
     "Date:2025",
     "Location found, sending to Virus Managers...",
     "IP Address: 203.0.113.45, sending to Virus Managers...",
-    "Name: Rhodri Funnel",
+    "Name: Rhodri Funnell",
     "County: Carmarthenshire",
     "Passwords logged: [redacted]",
+    "Email: aplucr5@hwbcymru.net"
     "SYSTEM: You have been pwned. Goodbye."
   ];
 
@@ -162,7 +163,7 @@
   // Set moderate default volume
   audio.volume = Number(volumeRange.value);
 
-  function typeLine(line, i, delayBetweenChars = 20) {
+  function typeLine(line, i, delayBetweenChars = 5) {
     return new Promise(resolve => {
       let idx = 0;
       const container = document.createElement('div');
