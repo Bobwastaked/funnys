@@ -159,7 +159,6 @@
   const volumeRange = document.getElementById('volumeRange');
   const volLabel = document.getElementById('volLabel');
 
-  // Ensure audio cannot autoplay by script until user interacts - we'll play on Start click.
   // Set moderate default volume
   audio.volume = Number(volumeRange.value);
 
@@ -186,9 +185,14 @@
     startBtn.disabled = true;
     stopBtn.disabled = false;
     screen.textContent = "";
+
     for (let i = 0; i < lines.length; i++) {
       await typeLine(lines[i], i, 20);
     }
+
+    // Play audio after typing completes
+    audio.play().catch(e => console.warn("Audio couldn't autoplay:", e));
+
     // keep cursor effect
     const cursor = document.createElement('span');
     cursor.textContent = "\n> ";
@@ -196,13 +200,7 @@
     screen.scrollTop = screen.scrollHeight;
   }
 
-  startBtn.addEventListener('click', async () => {
-    // Start audio only after explicit click
-    try {
-      await audio.play(); // user initiated
-    } catch (e) {
-      console.warn("Audio couldn't autoplay:", e);
-    }
+  startBtn.addEventListener('click', () => {
     runDemo();
   });
 
@@ -218,7 +216,7 @@
     volLabel.textContent = Math.round(audio.volume * 100) + "%";
   });
 
-  // Esc stops audio
+  // Esc stops audio and enables start again
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       audio.pause();
@@ -230,12 +228,14 @@
 
   // Prevent accidental navigation away while demo is running (optional)
   window.addEventListener('beforeunload', (ev) => {
-    if (!startBtn.disabled) return;
+    if (!startBtn.disabled) {
+      return;
+    }
     ev.preventDefault();
     ev.returnValue = '';
   });
 
-  // Accessibility: focus Start
+  // Accessibility: focus Start button on page load
   startBtn.focus();
 </script>
 </body>
