@@ -115,8 +115,7 @@
 
     <div class="controls">
       <button id="startBtn" class="btn primary" title="Start demo">Start Locating</button>
-      <button id="stopBtn" class="btn" title="Stop demo" disabled>Stop</button>
-
+      
       <label class="muted-note" style="margin-left:6px">Audio:</label>
       <input id="volumeRange" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume slider">
       <span id="volLabel" class="muted-note">100%</span>
@@ -154,7 +153,6 @@
 
   const screen = document.getElementById('screen');
   const startBtn = document.getElementById('startBtn');
-  const stopBtn = document.getElementById('stopBtn');
   const audio = document.getElementById('bgAudio');
   const volumeRange = document.getElementById('volumeRange');
   const volLabel = document.getElementById('volLabel');
@@ -183,7 +181,6 @@
 
   async function runDemo() {
     startBtn.disabled = true;
-    stopBtn.disabled = false;
     screen.textContent = "";
 
     for (let i = 0; i < lines.length; i++) {
@@ -204,11 +201,9 @@
     runDemo();
   });
 
-  stopBtn.addEventListener('click', () => {
     audio.pause();
     audio.currentTime = 0;
     startBtn.disabled = false;
-    stopBtn.disabled = true;
   });
 
   volumeRange.addEventListener('input', () => {
@@ -222,7 +217,6 @@
       audio.pause();
       audio.currentTime = 0;
       startBtn.disabled = false;
-      stopBtn.disabled = true;
     }
   });
 
